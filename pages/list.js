@@ -9,10 +9,10 @@ export default function EmployeeList() {
   return (
     <div>
       <h1>Employee List</h1>
-      <div class="add-employee-link">
+      <div className="add-employee-link">
         <button onClick={() => router.push("/add")}>Add New Employee</button>
       </div>
-      <div class="list-item">
+      <div className="list-item">
         <ul>
           {employees.map((employee) => (
             <li key={employee.id}>

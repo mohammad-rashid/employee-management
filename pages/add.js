@@ -26,7 +26,7 @@ export default function AddEmployee() {
       <h1>Add New Employee</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Name: </label>
             <input
               type="text"
@@ -36,7 +36,7 @@ export default function AddEmployee() {
               required
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Birthdate: </label>
             <input
               type="date"
@@ -45,7 +45,7 @@ export default function AddEmployee() {
               required
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Department: </label>
             <input
               type="text"
@@ -54,7 +54,7 @@ export default function AddEmployee() {
               required
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Experience: </label>
             <input
               type="number"

@@ -1,82 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useEmployees } from "../../context/EmployeeContext";
+import { useSelector } from "react-redux";
+import EmployeeForm from "../../components/EmployeeForm";
 
 export default function EditEmployee() {
-  const { employees, editEmployee } = useEmployees();
+  // Access the employees from the Redux store
+  const employees = useSelector((state) => state.employees.employees);
   const router = useRouter();
   const { id } = router.query;
-  const [name, setName] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [department, setDepartment] = useState("");
-  const [experience, setExperience] = useState("");
+  const [initialEmployee, setInitialEmployee] = useState(null);
 
+  // Find the employee with the matching id
   useEffect(() => {
-    const employee = employees.find((emp) => emp.id === parseInt(id));
-    if (employee) {
-      setName(employee.name);
-      setBirthdate(employee.birthdate);
-      setDepartment(employee.department);
-      setExperience(employee.experience);
+    if (id && employees.length > 0) {
+      const employee = employees.find((emp) => emp.id === parseInt(id));
+      if (employee) {
+        setInitialEmployee(employee);
+      }
     }
   }, [id, employees]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    editEmployee(parseInt(id), {
-      name,
-      birthdate,
-      department,
-      experience: parseInt(experience),
-    });
-    router.push("/list");
-  };
+  if (!initialEmployee) return <div>Employee Not Found</div>;
 
-  return (
-    <div>
-      <h1>Edit Employee</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <div className="form-group">
-            <label>Name: </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              pattern="[A-Za-z\s]+"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Birthdate: </label>
-            <input
-              type="date"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Department: </label>
-            <input
-              type="text"
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Experience: </label>
-            <input
-              type="number"
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-        <button type="submit">Update Employee</button>
-      </form>
-    </div>
-  );
+  return <EmployeeForm initialEmployee={initialEmployee} isEditing={true} />;
 }

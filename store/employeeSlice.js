@@ -15,7 +15,7 @@ const employeeSlice = createSlice({
   reducers: {
     // Action to add a new employee
     addEmployee: (state, action) => {
-      state.employees.push({ ...action.payload, id: state.employees.length });
+      state.employees.push({ ...action.payload, id: Date.now() });
       localStorage.setItem("employees", JSON.stringify(state.employees));
     },
 
